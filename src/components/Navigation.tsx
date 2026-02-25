@@ -23,7 +23,7 @@ export default function Navigation() {
       initial={{ y: -60 }}
       animate={{ y: scrolled ? 0 : -60 }}
       transition={{ duration: 0.3 }}
-      className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border"
+      className="fixed top-0 left-0 right-0 z-40 bg-background/90 md:bg-background/80 md:backdrop-blur-lg border-b border-border"
     >
       <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
         <a href="#" className="text-sm font-serif text-gradient-gold">東京研究</a>
@@ -58,7 +58,7 @@ export default function Navigation() {
       {mobileOpen && (
         <div
           id="mobile-navigation-menu"
-          className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border px-4 py-3 space-y-2"
+          className="md:hidden bg-background/95 border-t border-border px-4 py-3 space-y-2"
         >
           {navItems.map(item => (
             <a

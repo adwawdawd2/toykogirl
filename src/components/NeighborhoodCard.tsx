@@ -29,7 +29,7 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/85 md:bg-background/80 md:backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -51,7 +51,7 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
             <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
             <button
               onClick={onClose}
-              className="absolute top-3 right-3 p-1.5 rounded-full bg-background/60 backdrop-blur-sm text-foreground hover:bg-background/80 transition-colors"
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-background/75 md:bg-background/60 md:backdrop-blur-sm text-foreground hover:bg-background/80 transition-colors"
               aria-label="关闭弹窗"
             >
               <X className="w-4 h-4" />

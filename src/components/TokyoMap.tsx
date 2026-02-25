@@ -100,7 +100,7 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="absolute right-4 bottom-4 md:right-6 md:bottom-6 w-60 md:w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30"
+              className="absolute right-4 bottom-4 md:right-6 md:bottom-6 w-60 md:w-72 bg-card/95 md:backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30"
             >
               <img
                 src={getNeighborhoodImage(hovered.id, 400, 200)}

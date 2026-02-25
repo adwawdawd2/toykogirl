@@ -92,7 +92,39 @@
   }
 
   .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAALUlEQVR4AWNggAOWkJBg4A8vLy8YGBikmYGB4Q0jIyMDSQxkI2MTA5jAAAB3YQfkgMdcWAAAAABJRU5ErkJggg==");
+    background-repeat: repeat;
+    background-size: 16px 16px;
+  }
+
+  @media (max-width: 767px) {
+    .bg-noise {
+      background-image: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.12s !important;
+      transition-delay: 0ms !important;
+    }
+
+    .animate-pulse-glow,
+    [class*=" animate-in"],
+    [class^="animate-in"],
+    [class*=" animate-out"],
+    [class^="animate-out"] {
+      animation: none !important;
+      transform: none !important;
+    }
   }
 
   .scrollbar-hide {
