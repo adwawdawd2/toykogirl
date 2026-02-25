@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, BarChart3, BookOpen, Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { MapPin, BarChart3, BookOpen, Menu, X } from "lucide-react";
 
 const navItems = [
-  { id: 'map', label: '地图', icon: MapPin },
-  { id: 'data', label: '数据', icon: BarChart3 },
-  { id: 'article', label: '报告', icon: BookOpen },
+  { id: "map", label: "地图", icon: MapPin },
+  { id: "data", label: "数据", icon: BarChart3 },
+  { id: "article", label: "报告", icon: BookOpen },
 ];
 
 export default function Navigation() {
@@ -14,8 +14,8 @@ export default function Navigation() {
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 100);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
   }, []);
 
   return (

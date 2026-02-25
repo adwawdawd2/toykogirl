@@ -1,13 +1,13 @@
-import { lazy, Suspense, useState } from 'react';
-import { type Neighborhood, type ZoneId } from '@/data/neighborhoods';
-import HeroSection from '@/components/HeroSection';
-import Navigation from '@/components/Navigation';
-import TokyoMap from '@/components/TokyoMap';
-import SocialShare from '@/components/SocialShare';
+import { lazy, Suspense, useState } from "react";
+import { type Neighborhood, type ZoneId } from "@/data/neighborhoods";
+import HeroSection from "@/components/HeroSection";
+import Navigation from "@/components/Navigation";
+import TokyoMap from "@/components/TokyoMap";
+import SocialShare from "@/components/SocialShare";
 
-const NeighborhoodCard = lazy(() => import('@/components/NeighborhoodCard'));
-const DataOverview = lazy(() => import('@/components/DataOverview'));
-const ArticleSection = lazy(() => import('@/components/ArticleSection'));
+const NeighborhoodCard = lazy(() => import("@/components/NeighborhoodCard"));
+const DataOverview = lazy(() => import("@/components/DataOverview"));
+const ArticleSection = lazy(() => import("@/components/ArticleSection"));
 
 const Index = () => {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState<Neighborhood | null>(null);

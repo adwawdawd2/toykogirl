@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from '@/data/neighborhoods';
-import { zoneBorderColors, zoneSolidColors, zoneTextColors } from '@/lib/zone-theme';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from "@/data/neighborhoods";
+import { zoneBorderColors, zoneSolidColors, zoneTextColors } from "@/lib/zone-theme";
 
 interface Props {
   onSelectNeighborhood: (n: Neighborhood) => void;
@@ -59,7 +59,7 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
             <motion.button
               key={n.id}
               className="absolute z-10 group"
-              style={{ left: `${n.mapX}%`, top: `${n.mapY}%`, transform: 'translate(-50%, -50%)' }}
+              style={{ left: `${n.mapX}%`, top: `${n.mapY}%`, transform: "translate(-50%, -50%)" }}
               onMouseEnter={() => setHoveredId(n.id)}
               onMouseLeave={() => setHoveredId(null)}
               onClick={() => onSelectNeighborhood(n)}
