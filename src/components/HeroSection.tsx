@@ -7,7 +7,11 @@ export default function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1920&h=1080&fit=crop&auto=format&q=80"
+          src="/images/hero-tokyo.svg"
+          srcSet="/images/hero-tokyo.svg 640w, /images/hero-tokyo.svg 1280w, /images/hero-tokyo.svg 1920w"
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 1920px"
+          fetchPriority="high"
+          decoding="async"
           alt="Tokyo skyline"
           className="w-full h-full object-cover"
         />

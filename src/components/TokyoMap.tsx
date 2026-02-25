@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from "@/data/neighborhoods";
+import { neighborhoods, zones, getNeighborhoodImage, getNeighborhoodImageSrcSet, type Neighborhood, type ZoneId } from "@/data/neighborhoods";
 import { zoneBorderColors, zoneSolidColors, zoneTextColors } from "@/lib/zone-theme";
 
 interface Props {
@@ -102,12 +102,22 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               exit={{ opacity: 0, x: 20 }}
               className="absolute right-4 bottom-4 md:right-6 md:bottom-6 w-60 md:w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30"
             >
-              <img
-                src={getNeighborhoodImage(hovered.id, 400, 200)}
-                alt={hovered.name}
-                className="w-full h-28 object-cover"
-                loading="lazy"
-              />
+              <div className="relative h-28">
+                <div className="absolute inset-0 animate-pulse bg-muted" aria-hidden="true" />
+                <img
+                  src={getNeighborhoodImage(hovered.id, 320, 192)}
+                  srcSet={getNeighborhoodImageSrcSet(hovered.id, [
+                    { width: 320, height: 192 },
+                    { width: 640, height: 384 },
+                    { width: 960, height: 576 },
+                  ])}
+                  sizes="(max-width: 768px) 240px, 288px"
+                  alt={hovered.name}
+                  className="relative z-10 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div className="p-3">
                 <div className="flex items-center gap-2 mb-1">
                   <span className={`w-2 h-2 rounded-full ${zoneSolidColors[hovered.zone]}`} />

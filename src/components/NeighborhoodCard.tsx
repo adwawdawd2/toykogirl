@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Clock, Heart, ShoppingBag, Camera, Sparkles } from "lucide-react";
-import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage } from "@/data/neighborhoods";
+import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage, getNeighborhoodImageSrcSet } from "@/data/neighborhoods";
 import { zoneBgColors, zoneBorderColors, zoneTextColors } from "@/lib/zone-theme";
 
 interface Props {
@@ -41,12 +41,20 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
           onClick={e => e.stopPropagation()}
         >
           {/* Hero image */}
-          <div className="relative h-48 md:h-56 overflow-hidden">
+          <div className="relative h-48 md:h-56 overflow-hidden bg-muted">
+            <div className="absolute inset-0 animate-pulse bg-muted" aria-hidden="true" />
             <img
-              src={getNeighborhoodImage(neighborhood.id, 800, 400)}
+              src={getNeighborhoodImage(neighborhood.id, 640, 360)}
+              srcSet={getNeighborhoodImageSrcSet(neighborhood.id, [
+                { width: 320, height: 180 },
+                { width: 640, height: 360 },
+                { width: 960, height: 540 },
+              ])}
+              sizes="(max-width: 768px) 100vw, 512px"
               alt={neighborhood.name}
-              className="w-full h-full object-cover"
+              className="relative z-10 w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
             <button
@@ -94,12 +102,22 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
                     onClick={() => onNavigate(n)}
                     className="shrink-0 w-24 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-colors"
                   >
-                    <img
-                      src={getNeighborhoodImage(n.id, 200, 120)}
-                      alt={n.name}
-                      className="w-full h-14 object-cover"
-                      loading="lazy"
-                    />
+                    <div className="relative h-14 bg-muted">
+                      <div className="absolute inset-0 animate-pulse bg-muted" aria-hidden="true" />
+                      <img
+                        src={getNeighborhoodImage(n.id, 320, 192)}
+                        srcSet={getNeighborhoodImageSrcSet(n.id, [
+                          { width: 320, height: 192 },
+                          { width: 640, height: 384 },
+                          { width: 960, height: 576 },
+                        ])}
+                        sizes="96px"
+                        alt={n.name}
+                        className="relative z-10 w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
                     <div className="p-1.5">
                       <p className="text-xs font-medium text-foreground truncate">{n.name}</p>
                       <p className="text-[10px] text-muted-foreground truncate">{n.persona}</p>

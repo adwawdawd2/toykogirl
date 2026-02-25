@@ -1,5 +1,30 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { articleSections, sectionImages } from "@/data/neighborhoods";
+
+interface LazyImageProps {
+  src: string;
+  alt: string;
+  className: string;
+}
+
+function LazyImage({ src, alt, className }: LazyImageProps) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative w-full h-full bg-muted">
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-muted" aria-hidden="true" />}
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
+}
 
 export default function ArticleSection() {
   return (
@@ -34,13 +59,8 @@ export default function ArticleSection() {
 
               {/* Hero image for section */}
               {images[0] && (
-                <div className="relative mb-8 rounded-xl overflow-hidden aspect-[2/1]">
-                  <img
-                    src={images[0]}
-                    alt={section.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <div className="relative mb-8 rounded-xl overflow-hidden aspect-[2/1] min-h-[180px]">
+                  <LazyImage src={images[0]} alt={section.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                 </div>
               )}
@@ -61,12 +81,11 @@ export default function ArticleSection() {
               {images.length > 1 && (
                 <div className="grid grid-cols-2 gap-3 mt-8">
                   {images.slice(1).map((img, imgIdx) => (
-                    <div key={imgIdx} className="rounded-lg overflow-hidden aspect-[3/2]">
-                      <img
+                    <div key={imgIdx} className="rounded-lg overflow-hidden aspect-[3/2] min-h-[110px]">
+                      <LazyImage
                         src={img}
                         alt={`${section.title} ${imgIdx + 2}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
                       />
                     </div>
                   ))}

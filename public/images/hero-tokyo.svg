@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#1F2937"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="960" y1="80" x2="960" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <ellipse cx="960" cy="430" rx="780" ry="340" fill="url(#glow)"/>
+  <rect x="0" y="760" width="1920" height="320" fill="#020617"/>
+  <g fill="#111827">
+    <rect x="120" y="560" width="140" height="240"/>
+    <rect x="280" y="510" width="180" height="290"/>
+    <rect x="490" y="460" width="120" height="340"/>
+    <rect x="640" y="390" width="170" height="410"/>
+    <rect x="840" y="340" width="80" height="460"/>
+    <rect x="930" y="270" width="70" height="530"/>
+    <rect x="1030" y="420" width="160" height="380"/>
+    <rect x="1220" y="370" width="130" height="430"/>
+    <rect x="1380" y="480" width="210" height="320"/>
+    <rect x="1620" y="540" width="150" height="260"/>
+  </g>
+  <g fill="#FDE68A" opacity="0.5">
+    <rect x="300" y="560" width="10" height="14"/><rect x="320" y="560" width="10" height="14"/><rect x="340" y="560" width="10" height="14"/>
+    <rect x="665" y="450" width="10" height="14"/><rect x="685" y="450" width="10" height="14"/><rect x="705" y="450" width="10" height="14"/>
+    <rect x="1060" y="490" width="10" height="14"/><rect x="1080" y="490" width="10" height="14"/><rect x="1100" y="490" width="10" height="14"/>
+    <rect x="1240" y="430" width="10" height="14"/><rect x="1260" y="430" width="10" height="14"/><rect x="1280" y="430" width="10" height="14"/>
+    <rect x="1440" y="550" width="10" height="14"/><rect x="1460" y="550" width="10" height="14"/><rect x="1480" y="550" width="10" height="14"/>
+  </g>
+  <path d="M964 160L924 270H1004L964 160Z" fill="#F59E0B"/>
+  <rect x="952" y="270" width="24" height="530" fill="#F59E0B"/>
+</svg>

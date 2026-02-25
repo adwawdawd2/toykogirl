@@ -110,9 +110,35 @@ const photoMap: Record<string, string> = {
   "machida": "1441986300917-64674bd600d8",
 };
 
+type NeighborhoodImageOptions = {
+  width: number;
+  height?: number;
+};
+
+const getNeighborhoodPhotoId = (id: string): string => photoMap[id] || "1540959733332-eab4deabeeaf";
+
 export const getNeighborhoodImage = (id: string, w = 800, h = 600): string => {
-  const photoId = photoMap[id] || "1540959733332-eab4deabeeaf";
+  const photoId = getNeighborhoodPhotoId(id);
   return `https://images.unsplash.com/photo-${photoId}?w=${w}&h=${h}&fit=crop&auto=format&q=80`;
+};
+
+export const getNeighborhoodImageSrcSet = (
+  id: string,
+  options: NeighborhoodImageOptions[] = [
+    { width: 320 },
+    { width: 640 },
+    { width: 960 },
+  ],
+): string => {
+  const photoId = getNeighborhoodPhotoId(id);
+
+  return options
+    .map(({ width, height }) => {
+      const resolvedHeight = height ?? Math.round(width * 0.6);
+      const url = `https://images.unsplash.com/photo-${photoId}?w=${width}&h=${resolvedHeight}&fit=crop&auto=format&q=80`;
+      return `${url} ${width}w`;
+    })
+    .join(", ");
 };
 
 // Section images for the article
