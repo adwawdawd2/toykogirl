@@ -52,6 +52,7 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
             <button
               onClick={onClose}
               className="absolute top-3 right-3 p-1.5 rounded-full bg-background/60 backdrop-blur-sm text-foreground hover:bg-background/80 transition-colors"
+              aria-label="关闭弹窗"
             >
               <X className="w-4 h-4" />
             </button>

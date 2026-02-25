@@ -69,8 +69,16 @@ export default function DataOverview({ onSelectNeighborhood }: Props) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.02 }}
-                  className="border-t border-border hover:bg-secondary/30 cursor-pointer transition-colors"
+                  className="border-t border-border hover:bg-secondary/30 cursor-pointer transition-colors focus-within:bg-secondary/30"
                   onClick={() => onSelectNeighborhood(n)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectNeighborhood(n);
+                    }
+                  }}
                 >
                   <td className="p-3">
                     <div className="flex items-center gap-2">
