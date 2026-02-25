@@ -1,4 +1,5 @@
 import { Share2, Twitter, MessageCircle } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 export default function SocialShare() {
   const url = typeof window !== 'undefined' ? window.location.href : '';
@@ -10,12 +11,42 @@ export default function SocialShare() {
       line: `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`,
       weibo: `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
     };
-    window.open(urls[platform], '_blank', 'width=600,height=400');
+
+    const shareUrl = urls[platform];
+
+    if (!shareUrl) {
+      console.warn(`[SocialShare] Unsupported platform: ${platform}`);
+      return;
+    }
+
+    const popup = window.open(shareUrl, '_blank', 'noopener,noreferrer,width=600,height=400');
+
+    if (!popup) {
+      toast({
+        title: '无法打开分享窗口',
+        description: '请允许弹出窗口后重试，或使用浏览器原生分享。',
+      });
+    }
   };
 
   const nativeShare = async () => {
     if (navigator.share) {
-      await navigator.share({ title, url });
+      try {
+        await navigator.share({ title, url });
+      } catch (error) {
+        const isUserCancelled =
+          (error instanceof DOMException && error.name === 'AbortError') ||
+          (error instanceof Error && /cancel|canceled|aborted|用户取消|取消分享/i.test(error.message));
+
+        if (isUserCancelled) {
+          return;
+        }
+
+        toast({
+          title: '分享失败',
+          description: '请稍后重试，或使用下方平台按钮分享。',
+        });
+      }
     }
   };
 
