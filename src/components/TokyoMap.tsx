@@ -13,7 +13,6 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const hovered = neighborhoods.find(n => n.id === hoveredId);
 
-  const filtered = activeZone ? neighborhoods.filter(n => n.zone === activeZone) : neighborhoods;
 
   return (
     <section className="relative w-full" id="map">
