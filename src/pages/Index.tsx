@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { type Neighborhood, type ZoneId } from '@/data/neighborhoods';
 import HeroSection from '@/components/HeroSection';
 import Navigation from '@/components/Navigation';
 import TokyoMap from '@/components/TokyoMap';
-import NeighborhoodCard from '@/components/NeighborhoodCard';
-import DataOverview from '@/components/DataOverview';
-import ArticleSection from '@/components/ArticleSection';
 import SocialShare from '@/components/SocialShare';
+
+const NeighborhoodCard = lazy(() => import('@/components/NeighborhoodCard'));
+const DataOverview = lazy(() => import('@/components/DataOverview'));
+const ArticleSection = lazy(() => import('@/components/ArticleSection'));
 
 const Index = () => {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState<Neighborhood | null>(null);
@@ -33,19 +34,25 @@ const Index = () => {
         </div>
       </section>
 
-      <DataOverview onSelectNeighborhood={setSelectedNeighborhood} />
+      <Suspense fallback={<div className="py-16 md:py-24" />}>
+        <DataOverview onSelectNeighborhood={setSelectedNeighborhood} />
+      </Suspense>
 
-      <ArticleSection />
+      <Suspense fallback={<div className="py-16" />}>
+        <ArticleSection />
+      </Suspense>
 
       <SocialShare />
 
       {/* Neighborhood detail modal */}
       {selectedNeighborhood && (
-        <NeighborhoodCard
-          neighborhood={selectedNeighborhood}
-          onClose={() => setSelectedNeighborhood(null)}
-          onNavigate={setSelectedNeighborhood}
-        />
+        <Suspense fallback={null}>
+          <NeighborhoodCard
+            neighborhood={selectedNeighborhood}
+            onClose={() => setSelectedNeighborhood(null)}
+            onNavigate={setSelectedNeighborhood}
+          />
+        </Suspense>
       )}
     </div>
   );
