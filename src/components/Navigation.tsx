@@ -13,9 +13,27 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 100);
+    let frameId: number | null = null;
+
+    const updateScrolled = () => {
+      frameId = null;
+      const nextScrolled = window.scrollY > 100;
+      setScrolled(prev => (prev === nextScrolled ? prev : nextScrolled));
+    };
+
+    const handler = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(updateScrolled);
+    };
+
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    return () => {
+      window.removeEventListener("scroll", handler);
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
   }, []);
 
   return (
@@ -46,7 +64,7 @@ export default function Navigation() {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-foreground"
-          aria-label={mobileOpen ? '关闭导航菜单' : '打开导航菜单'}
+          aria-label={mobileOpen ? "关闭导航菜单" : "打开导航菜单"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-navigation-menu"
         >
