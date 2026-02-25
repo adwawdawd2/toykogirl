@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from "@/data/neighborhoods";
 import { zoneBorderColors, zoneSolidColors, zoneTextColors } from "@/lib/zone-theme";
@@ -9,13 +9,38 @@ interface Props {
   onSetActiveZone: (z: ZoneId | null) => void;
 }
 
+interface NeighborhoodDotProps {
+  neighborhood: Neighborhood;
+  isActive: boolean;
+  onHover: (id: string | null) => void;
+  onFocus: (id: string | null) => void;
+  onSelectNeighborhood: (n: Neighborhood) => void;
+}
+
+const NeighborhoodDot = memo(
+  ({ neighborhood, isActive, onHover, onFocus, onSelectNeighborhood }: NeighborhoodDotProps) => (
+    <button
+      className={`absolute z-10 group transition-all duration-200 ${isActive ? "opacity-100 scale-100" : "opacity-20 scale-90"}`}
+      style={{ left: `${neighborhood.mapX}%`, top: `${neighborhood.mapY}%`, transform: "translate(-50%, -50%)" }}
+      onMouseEnter={() => onHover(neighborhood.id)}
+      onMouseLeave={() => onHover(null)}
+      onFocus={() => onFocus(neighborhood.id)}
+      onBlur={() => onFocus(null)}
+      onClick={() => onSelectNeighborhood(neighborhood)}
+      aria-label={`打开 ${neighborhood.name}：${neighborhood.persona}`}
+    >
+      <span className={`absolute inset-0 w-4 h-4 md:w-5 md:h-5 rounded-full ${zoneSolidColors[neighborhood.zone]} opacity-30 animate-pulse-glow -translate-x-1/2 -translate-y-1/2`} />
+      <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneSolidColors[neighborhood.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150 group-focus-visible:scale-150 ring-offset-2 ring-offset-background group-focus-visible:ring-2 group-focus-visible:ring-foreground/60`} />
+    </button>
+  ),
+  (prev, next) => prev.neighborhood.id === next.neighborhood.id && prev.isActive === next.isActive,
+);
+
 export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActiveZone }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const activePreviewId = hoveredId ?? focusedId;
-  const hovered = neighborhoods.find(n => n.id === activePreviewId);
-
-  const filtered = activeZone ? neighborhoods.filter(n => n.zone === activeZone) : neighborhoods;
+  const hovered = neighborhoods.find(n => n.id === activePreviewId) ?? null;
 
   return (
     <section className="relative w-full" id="map">
@@ -55,52 +80,30 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
         </div>
 
         {/* Neighborhood dots */}
-        {neighborhoods.map(n => {
-          const isActive = !activeZone || n.zone === activeZone;
-          return (
-            <motion.button
-              key={n.id}
-              className="absolute z-10 group"
-              style={{ left: `${n.mapX}%`, top: `${n.mapY}%`, transform: "translate(-50%, -50%)" }}
-              onMouseEnter={() => setHoveredId(n.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              onFocus={() => setFocusedId(n.id)}
-              onBlur={() => setFocusedId(current => (current === n.id ? null : current))}
-              onClick={() => onSelectNeighborhood(n)}
-              aria-label={`打开 ${n.name}：${n.persona}`}
-              animate={{ opacity: isActive ? 1 : 0.15, scale: isActive ? 1 : 0.7 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Pulse ring */}
-              <span className={`absolute inset-0 w-4 h-4 md:w-5 md:h-5 rounded-full ${zoneSolidColors[n.zone]} opacity-30 animate-pulse-glow -translate-x-1/2 -translate-y-1/2`} />
-              {/* Dot */}
-              <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneSolidColors[n.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150 group-focus-visible:scale-150 ring-offset-2 ring-offset-background group-focus-visible:ring-2 group-focus-visible:ring-foreground/60`} />
-              {/* Label on hover */}
-              <AnimatePresence>
-                {(hoveredId === n.id || focusedId === n.id) && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 5 }}
-                    className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap px-2 py-1 rounded text-[10px] md:text-xs bg-card border ${zoneBorderColors[n.zone]} shadow-lg z-20`}
-                  >
-                    <span className={`font-bold ${zoneTextColors[n.zone]}`}>{n.name}</span>
-                    <span className="text-muted-foreground ml-1">{n.persona}</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          );
-        })}
+        {neighborhoods.map(n => (
+          <NeighborhoodDot
+            key={n.id}
+            neighborhood={n}
+            isActive={!activeZone || n.zone === activeZone}
+            onHover={setHoveredId}
+            onFocus={setFocusedId}
+            onSelectNeighborhood={onSelectNeighborhood}
+          />
+        ))}
 
-        {/* Hover preview card */}
+        {/* Single map-level tooltip/preview */}
         <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              className="absolute right-4 bottom-4 md:right-6 md:bottom-6 w-60 md:w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30"
+              key={hovered.id}
+              initial={{ opacity: 0, y: 8, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.96 }}
+              className="absolute w-56 md:w-64 bg-card/95 backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30 pointer-events-none"
+              style={{
+                left: `min(calc(${hovered.mapX}% + 16px), calc(100% - 18rem))`,
+                top: `max(calc(${hovered.mapY}% - 160px), 8px)`,
+              }}
             >
               <img
                 src={getNeighborhoodImage(hovered.id, 400, 200)}
