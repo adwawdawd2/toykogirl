@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { articleSections, sectionImages } from '@/data/neighborhoods';
+import { motion } from "framer-motion";
+import { articleSections, sectionImages } from "@/data/neighborhoods";
 
 export default function ArticleSection() {
   return (
@@ -22,7 +22,7 @@ export default function ArticleSection() {
               key={section.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
               className="mb-20"
             >
@@ -47,7 +47,7 @@ export default function ArticleSection() {
 
               {/* Content */}
               <div className="space-y-4 text-foreground/85 leading-relaxed text-[15px]">
-                {section.content.split('\n\n').map((paragraph, pIdx) => (
+                {section.content.split("\n\n").map((paragraph, pIdx) => (
                   <p key={pIdx}>{paragraph}</p>
                 ))}
               </div>

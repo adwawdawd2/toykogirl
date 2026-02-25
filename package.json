@@ -11,7 +11,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deps:outdated:export": "node scripts/export-outdated.mjs"
+    "deps:outdated:export": "node scripts/export-outdated.mjs",
+    "format": "eslint . --fix",
+    "format:check": "eslint ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
