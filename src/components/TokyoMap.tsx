@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from '@/data/neighborhoods';
 import { zoneBorderColors, zoneSolidColors, zoneTextColors } from '@/lib/zone-theme';
+import AppImage from '@/components/AppImage';
 
 interface Props {
   onSelectNeighborhood: (n: Neighborhood) => void;
@@ -97,11 +98,13 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               exit={{ opacity: 0, x: 20 }}
               className="absolute right-4 bottom-4 md:right-6 md:bottom-6 w-60 md:w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg overflow-hidden shadow-2xl z-30"
             >
-              <img
+              <AppImage
                 src={getNeighborhoodImage(hovered.id, 400, 200)}
                 alt={hovered.name}
                 className="w-full h-28 object-cover"
                 loading="lazy"
+                width={400}
+                height={200}
               />
               <div className="p-3">
                 <div className="flex items-center gap-2 mb-1">
