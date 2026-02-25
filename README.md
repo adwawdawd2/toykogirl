@@ -60,6 +60,23 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+
+## 日志规范（Logging Policy）
+
+为避免日志噪音并支持后续接入统一上报，项目内日志按以下级别处理：
+
+- `user_error`（用户错误）
+  - 定义：由用户输入或访问行为触发的预期错误（例如访问不存在路由 404）。
+  - 处理：可记录结构化上下文，默认以 `warn` 输出，便于产品与运营排查。
+- `system_exception`（系统异常）
+  - 定义：接口失败、运行时异常、依赖不可用等非预期问题。
+  - 处理：应优先上报到监控系统；未接入上报时默认以 `error` 输出。
+- `debug`（调试信息）
+  - 定义：仅供开发排查的临时诊断信息。
+  - 处理：仅在开发环境输出，生产环境默认静默。
+
+实现建议：统一调用 `src/lib/logger.ts` 提供的 `logEvent`，避免直接散落 `console.*`。如需接入外部平台，可通过 `setLogReporter` 注入上报函数。
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
