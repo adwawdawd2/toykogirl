@@ -11,7 +11,9 @@ interface Props {
 
 export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActiveZone }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const hovered = neighborhoods.find(n => n.id === hoveredId);
+  const [focusedId, setFocusedId] = useState<string | null>(null);
+  const activePreviewId = hoveredId ?? focusedId;
+  const hovered = neighborhoods.find(n => n.id === activePreviewId);
 
   const filtered = activeZone ? neighborhoods.filter(n => n.zone === activeZone) : neighborhoods;
 
@@ -62,17 +64,20 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               style={{ left: `${n.mapX}%`, top: `${n.mapY}%`, transform: 'translate(-50%, -50%)' }}
               onMouseEnter={() => setHoveredId(n.id)}
               onMouseLeave={() => setHoveredId(null)}
+              onFocus={() => setFocusedId(n.id)}
+              onBlur={() => setFocusedId(current => (current === n.id ? null : current))}
               onClick={() => onSelectNeighborhood(n)}
+              aria-label={`打开 ${n.name}：${n.persona}`}
               animate={{ opacity: isActive ? 1 : 0.15, scale: isActive ? 1 : 0.7 }}
               transition={{ duration: 0.3 }}
             >
               {/* Pulse ring */}
               <span className={`absolute inset-0 w-4 h-4 md:w-5 md:h-5 rounded-full ${zoneSolidColors[n.zone]} opacity-30 animate-pulse-glow -translate-x-1/2 -translate-y-1/2`} />
               {/* Dot */}
-              <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneSolidColors[n.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150`} />
+              <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneSolidColors[n.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150 group-focus-visible:scale-150 ring-offset-2 ring-offset-background group-focus-visible:ring-2 group-focus-visible:ring-foreground/60`} />
               {/* Label on hover */}
               <AnimatePresence>
-                {hoveredId === n.id && (
+                {(hoveredId === n.id || focusedId === n.id) && (
                   <motion.div
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}

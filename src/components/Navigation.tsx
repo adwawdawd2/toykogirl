@@ -43,14 +43,23 @@ export default function Navigation() {
         </div>
 
         {/* Mobile toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-foreground">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden text-foreground"
+          aria-label={mobileOpen ? '关闭导航菜单' : '打开导航菜单'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation-menu"
+        >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border px-4 py-3 space-y-2">
+        <div
+          id="mobile-navigation-menu"
+          className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border px-4 py-3 space-y-2"
+        >
           {navItems.map(item => (
             <a
               key={item.id}
