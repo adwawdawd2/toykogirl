@@ -1,24 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { neighborhoods, zones, type ZoneId, type Neighborhood } from '@/data/neighborhoods';
-
-const zoneTextColors: Record<ZoneId, string> = {
-  power: 'text-zone-power',
-  career: 'text-zone-career',
-  elite: 'text-zone-elite',
-  tower: 'text-zone-tower',
-  subculture: 'text-zone-subculture',
-  artsy: 'text-zone-artsy',
-};
-
-const zoneDotColors: Record<ZoneId, string> = {
-  power: 'bg-zone-power',
-  career: 'bg-zone-career',
-  elite: 'bg-zone-elite',
-  tower: 'bg-zone-tower',
-  subculture: 'bg-zone-subculture',
-  artsy: 'bg-zone-artsy',
-};
+import { zoneSolidColors, zoneTextColors } from '@/lib/zone-theme';
 
 interface Props {
   onSelectNeighborhood: (n: Neighborhood) => void;
@@ -58,7 +41,7 @@ export default function DataOverview({ onSelectNeighborhood }: Props) {
               onClick={() => setFilter(z.id)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
                 filter === z.id
-                  ? `${zoneDotColors[z.id]} text-primary-foreground border-transparent`
+                  ? `${zoneSolidColors[z.id]} text-primary-foreground border-transparent`
                   : `border-border text-muted-foreground hover:${zoneTextColors[z.id]}`
               }`}
             >
@@ -91,7 +74,7 @@ export default function DataOverview({ onSelectNeighborhood }: Props) {
                 >
                   <td className="p-3">
                     <div className="flex items-center gap-2">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${zoneDotColors[n.zone]}`} />
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${zoneSolidColors[n.zone]}`} />
                       <span className="font-medium text-foreground">{n.name}</span>
                     </div>
                   </td>

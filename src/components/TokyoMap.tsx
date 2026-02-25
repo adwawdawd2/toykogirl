@@ -1,33 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { neighborhoods, zones, getNeighborhoodImage, type Neighborhood, type ZoneId } from '@/data/neighborhoods';
-
-const zoneColors: Record<ZoneId, string> = {
-  power: 'bg-zone-power',
-  career: 'bg-zone-career',
-  elite: 'bg-zone-elite',
-  tower: 'bg-zone-tower',
-  subculture: 'bg-zone-subculture',
-  artsy: 'bg-zone-artsy',
-};
-
-const zoneBorderColors: Record<ZoneId, string> = {
-  power: 'border-zone-power',
-  career: 'border-zone-career',
-  elite: 'border-zone-elite',
-  tower: 'border-zone-tower',
-  subculture: 'border-zone-subculture',
-  artsy: 'border-zone-artsy',
-};
-
-const zoneTextColors: Record<ZoneId, string> = {
-  power: 'text-zone-power',
-  career: 'text-zone-career',
-  elite: 'text-zone-elite',
-  tower: 'text-zone-tower',
-  subculture: 'text-zone-subculture',
-  artsy: 'text-zone-artsy',
-};
+import { zoneBorderColors, zoneSolidColors, zoneTextColors } from '@/lib/zone-theme';
 
 interface Props {
   onSelectNeighborhood: (n: Neighborhood) => void;
@@ -51,7 +25,7 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
             onClick={() => onSetActiveZone(activeZone === z.id ? null : z.id)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
               activeZone === z.id
-                ? `${zoneColors[z.id]} text-primary-foreground border-transparent`
+                ? `${zoneSolidColors[z.id]} text-primary-foreground border-transparent`
                 : `border-border text-muted-foreground hover:${zoneTextColors[z.id]}`
             }`}
           >
@@ -93,9 +67,9 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               transition={{ duration: 0.3 }}
             >
               {/* Pulse ring */}
-              <span className={`absolute inset-0 w-4 h-4 md:w-5 md:h-5 rounded-full ${zoneColors[n.zone]} opacity-30 animate-pulse-glow -translate-x-1/2 -translate-y-1/2`} />
+              <span className={`absolute inset-0 w-4 h-4 md:w-5 md:h-5 rounded-full ${zoneSolidColors[n.zone]} opacity-30 animate-pulse-glow -translate-x-1/2 -translate-y-1/2`} />
               {/* Dot */}
-              <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneColors[n.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150`} />
+              <span className={`relative block w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${zoneSolidColors[n.zone]} border border-background shadow-lg -translate-x-1/2 -translate-y-1/2 transition-transform group-hover:scale-150`} />
               {/* Label on hover */}
               <AnimatePresence>
                 {hoveredId === n.id && (
@@ -131,7 +105,7 @@ export default function TokyoMap({ onSelectNeighborhood, activeZone, onSetActive
               />
               <div className="p-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={`w-2 h-2 rounded-full ${zoneColors[hovered.zone]}`} />
+                  <span className={`w-2 h-2 rounded-full ${zoneSolidColors[hovered.zone]}`} />
                   <span className="text-sm font-bold text-foreground">{hovered.name}</span>
                   <span className="text-xs text-muted-foreground">{hovered.nameEn}</span>
                 </div>

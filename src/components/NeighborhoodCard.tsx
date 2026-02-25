@@ -1,33 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Heart, ShoppingBag, Camera, Sparkles } from 'lucide-react';
-import { type Neighborhood, type ZoneId, neighborhoods, zones, getNeighborhoodImage } from '@/data/neighborhoods';
-
-const zoneTextColors: Record<ZoneId, string> = {
-  power: 'text-zone-power',
-  career: 'text-zone-career',
-  elite: 'text-zone-elite',
-  tower: 'text-zone-tower',
-  subculture: 'text-zone-subculture',
-  artsy: 'text-zone-artsy',
-};
-
-const zoneBgColors: Record<ZoneId, string> = {
-  power: 'bg-zone-power/10',
-  career: 'bg-zone-career/10',
-  elite: 'bg-zone-elite/10',
-  tower: 'bg-zone-tower/10',
-  subculture: 'bg-zone-subculture/10',
-  artsy: 'bg-zone-artsy/10',
-};
-
-const zoneBorderColors: Record<ZoneId, string> = {
-  power: 'border-zone-power/30',
-  career: 'border-zone-career/30',
-  elite: 'border-zone-elite/30',
-  tower: 'border-zone-tower/30',
-  subculture: 'border-zone-subculture/30',
-  artsy: 'border-zone-artsy/30',
-};
+import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage } from '@/data/neighborhoods';
+import { zoneBgColors, zoneBorderColors, zoneTextColors } from '@/lib/zone-theme';
 
 interface Props {
   neighborhood: Neighborhood | null;
