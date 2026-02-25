@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Heart, ShoppingBag, Camera, Sparkles } from 'lucide-react';
 import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage } from '@/data/neighborhoods';
 import { zoneBgColors, zoneBorderColors, zoneTextColors } from '@/lib/zone-theme';
+import AppImage from '@/components/AppImage';
 
 interface Props {
   neighborhood: Neighborhood | null;
@@ -42,11 +43,13 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
         >
           {/* Hero image */}
           <div className="relative h-48 md:h-56 overflow-hidden">
-            <img
+            <AppImage
               src={getNeighborhoodImage(neighborhood.id, 800, 400)}
               alt={neighborhood.name}
               className="w-full h-full object-cover"
               loading="lazy"
+              width={800}
+              height={400}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
             <button
@@ -93,11 +96,13 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
                     onClick={() => onNavigate(n)}
                     className="shrink-0 w-24 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-colors"
                   >
-                    <img
+                    <AppImage
                       src={getNeighborhoodImage(n.id, 200, 120)}
                       alt={n.name}
                       className="w-full h-14 object-cover"
                       loading="lazy"
+                      width={200}
+                      height={120}
                     />
                     <div className="p-1.5">
                       <p className="text-xs font-medium text-foreground truncate">{n.name}</p>

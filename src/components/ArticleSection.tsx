@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { articleSections, sectionImages } from '@/data/neighborhoods';
+import AppImage from '@/components/AppImage';
 
 export default function ArticleSection() {
   return (
@@ -35,11 +36,13 @@ export default function ArticleSection() {
               {/* Hero image for section */}
               {images[0] && (
                 <div className="relative mb-8 rounded-xl overflow-hidden aspect-[2/1]">
-                  <img
+                  <AppImage
                     src={images[0]}
                     alt={section.title}
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    width={1200}
+                    height={600}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                 </div>
@@ -62,11 +65,13 @@ export default function ArticleSection() {
                 <div className="grid grid-cols-2 gap-3 mt-8">
                   {images.slice(1).map((img, imgIdx) => (
                     <div key={imgIdx} className="rounded-lg overflow-hidden aspect-[3/2]">
-                      <img
+                      <AppImage
                         src={img}
                         alt={`${section.title} ${imgIdx + 2}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        width={600}
+                        height={400}
                       />
                     </div>
                   ))}
