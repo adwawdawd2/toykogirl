@@ -1,7 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Clock, Heart, ShoppingBag, Camera, Sparkles } from 'lucide-react';
-import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage } from '@/data/neighborhoods';
-import { zoneBgColors, zoneBorderColors, zoneTextColors } from '@/lib/zone-theme';
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Clock, Heart, ShoppingBag, Camera, Sparkles } from "lucide-react";
+import { type Neighborhood, neighborhoods, zones, getNeighborhoodImage } from "@/data/neighborhoods";
+import { zoneBgColors, zoneBorderColors, zoneTextColors } from "@/lib/zone-theme";
 
 interface Props {
   neighborhood: Neighborhood | null;
@@ -16,11 +16,11 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
   const sameZone = neighborhoods.filter(n => n.zone === neighborhood.zone && n.id !== neighborhood.id);
 
   const infoItems = [
-    { icon: ShoppingBag, label: '穿搭风格', value: neighborhood.fashion },
-    { icon: Sparkles, label: '生活关键词', value: neighborhood.lifestyle },
-    { icon: Camera, label: '社交媒体画像', value: neighborhood.socialMedia },
-    { icon: Heart, label: '恋爱倾向', value: neighborhood.romance },
-    { icon: Clock, label: '出没时间', value: neighborhood.peakTime },
+    { icon: ShoppingBag, label: "穿搭风格", value: neighborhood.fashion },
+    { icon: Sparkles, label: "生活关键词", value: neighborhood.lifestyle },
+    { icon: Camera, label: "社交媒体画像", value: neighborhood.socialMedia },
+    { icon: Heart, label: "恋爱倾向", value: neighborhood.romance },
+    { icon: Clock, label: "出没时间", value: neighborhood.peakTime },
   ];
 
   return (
@@ -36,7 +36,7 @@ export default function NeighborhoodCard({ neighborhood, onClose, onNavigate }: 
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 40, scale: 0.95 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
           className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto scrollbar-hide bg-card border border-border rounded-xl shadow-2xl"
           onClick={e => e.stopPropagation()}
         >

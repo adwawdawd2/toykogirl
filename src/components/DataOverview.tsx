@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { neighborhoods, zones, type ZoneId, type Neighborhood } from '@/data/neighborhoods';
-import { zoneSolidColors, zoneTextColors } from '@/lib/zone-theme';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { neighborhoods, zones, type ZoneId, type Neighborhood } from "@/data/neighborhoods";
+import { zoneSolidColors, zoneTextColors } from "@/lib/zone-theme";
 
 interface Props {
   onSelectNeighborhood: (n: Neighborhood) => void;
 }
 
 export default function DataOverview({ onSelectNeighborhood }: Props) {
-  const [filter, setFilter] = useState<ZoneId | 'all'>('all');
+  const [filter, setFilter] = useState<ZoneId | "all">("all");
 
-  const filtered = filter === 'all' ? neighborhoods : neighborhoods.filter(n => n.zone === filter);
+  const filtered = filter === "all" ? neighborhoods : neighborhoods.filter(n => n.zone === filter);
 
   return (
     <section className="py-16 md:py-24" id="data">
@@ -28,9 +28,9 @@ export default function DataOverview({ onSelectNeighborhood }: Props) {
         {/* Filter tabs */}
         <div className="flex flex-wrap gap-2 mb-6 justify-center">
           <button
-            onClick={() => setFilter('all')}
+            onClick={() => setFilter("all")}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
-              filter === 'all' ? 'bg-primary text-primary-foreground border-transparent' : 'border-border text-muted-foreground hover:text-foreground'
+              filter === "all" ? "bg-primary text-primary-foreground border-transparent" : "border-border text-muted-foreground hover:text-foreground"
             }`}
           >
             全部 ({neighborhoods.length})

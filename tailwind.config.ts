@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Noto Sans JP"', 'sans-serif'],
-        serif: ['"Noto Serif JP"', 'serif'],
+        sans: ['"Noto Sans JP"', "sans-serif"],
+        serif: ['"Noto Serif JP"', "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
